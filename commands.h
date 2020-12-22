@@ -14,7 +14,12 @@
     Inputs* FreeList(Inputs* lst);
 
     
+
+
+
     int PrintFileContent(char* fileName);
+    int CountCharactersInAFile(char* fileName);
+    void DeleteFile(char* fileName);
 
     void teste();
 
