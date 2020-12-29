@@ -9,20 +9,20 @@
         struct _Inputs *next;
     } Inputs;
 
-    Inputs* ListAppend(Inputs* lst, char* word);
-    Inputs* ParseInputIntoList(char* string, Inputs *lst);
-    Inputs* FreeList(Inputs* lst);
+    Inputs* ListAppend(Inputs* lst, char* word); //Divides the user input in commands and arguments
+    Inputs* ParseInputIntoList(char* string, Inputs *lst); //Inserts command/argument in the list
+    Inputs* FreeList(Inputs* lst); //Free list
 
     
 
 
-    void PrintFileContent(char* fileName);
-    int CountCharactersInAFile(char* fileName);
-    void DeleteFile(char* fileName);
-    void FileStat(char* fileName);
-    void TruncateTwoFiles(char* fOrigin, char* fDest);
-    void ListPath(char* path);
+    void PrintFileContent(char* fileName); //Prints the content of a given file
+    int CountCharactersInAFile(char* fileName); //Count the characters in a file
+    void DeleteFile(char* fileName); //Deletes a file given it's name
+    void FileStat(char* fileName); //Prints information of the file system of a chosen file
+    void TruncateTwoFiles(char* fOrigin, char* fDest); //Truncate two given Files
+    void ListPath(char* path); //List all files and directories on the given path
 
-    void teste();
+
 
 #endif

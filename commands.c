@@ -127,7 +127,7 @@ void DeleteFile(char* fileName)
     }
 }
 
-//Prints information of the file system of a chosen file
+//Prints information of the file system of a choosen file
 void FileStat(char* fileName)
 {
     struct stat sb;
