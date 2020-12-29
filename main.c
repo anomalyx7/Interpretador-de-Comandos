@@ -92,7 +92,7 @@ int main(int argc, char* argv[])
 
             //The child process enters the if statement and calls a function to
             //append the content of a file to another
-            if(pid == 0)
+            if (pid == 0)
                 TruncateTwoFiles(lst->next->input, lst->next->next->input);
             //The parent process will wait until the child finnishes it's job since there's a chance
             //that in the next command the user will use one of the files in use and that could cause
@@ -100,7 +100,28 @@ int main(int argc, char* argv[])
             else
                 wait(1);
         }
-        
+
+        else if (strcmp(lst->input, "lista") == 0)//Enters if the user input command is equal to "lista"
+        {
+           
+            pid = fork();
+
+            //The child process enters the if statement and calls a function to
+            //append the content of a file to another
+            if (pid == 0)
+            {
+                if (lst->next->input != NULL)
+                    ListPath(lst->next->input);
+                else 
+                    ListPath(".");
+            }
+            //The parent process will wait until the child finnishes it's job since there's a chance
+            //that in the next command the user will use one of the files in use and that could cause
+            //problems
+            else
+                wait(1);
+        }
+
         //Erases the list from the parent process after each command executed
         if(pid != 0)
             lst = FreeList(lst);

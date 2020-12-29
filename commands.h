@@ -22,6 +22,7 @@
     void DeleteFile(char* fileName);
     void FileStat(char* fileName);
     void TruncateTwoFiles(char* fOrigin, char* fDest);
+    void ListPath(char* path);
 
     void teste();
 

@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <pwd.h>
+#include <dirent.h> 
 
 //Prints the content of a given file
 void PrintFileContent(char* fileName)
@@ -195,11 +196,35 @@ void TruncateTwoFiles(char* fOrigin, char* fDest)
     fclose(fo);
 }
 
+void ListPath(char* path)
+{
+    struct dirent *dts;
+    DIR *directory = opendir(path);
+    
+    if (directory == NULL)
+    {
+        perror("There was an error trying to open the directory");
+        exit(1);
+    }
+
+    printf("Files on the inserted path\n");
+    
+    while ((dts = readdir(directory)) != NULL) 
+        switch (dts->d_type)
+        {
+            case DT_REG:
+                printf ("Regular File: %s\n", dts->d_name);
+                break;
+            case DT_DIR:
+                printf ("Directory: %s\n", dts->d_name);
+                break;
+            default:
+                break;
+        }
 
 
-
-
-
+    closedir(directory);
+}
 
 
 void teste()
