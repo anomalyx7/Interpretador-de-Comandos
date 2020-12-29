@@ -36,6 +36,7 @@ int main(int argc, char* argv[])
             //the content of the file asked by the user into the terminal/console
             if(pid == 0) 
                 PrintFileContent(lst->next->input);
+
             //The parent process will wait until the child process finnishes it's job 
             //since it's writing to the terminal/console
             else 
@@ -51,8 +52,8 @@ int main(int argc, char* argv[])
             //to count the amount of characters in a file
             if(pid == 0)
             {
-                size = CountCharactersInAFile(lst->next->input);
-                printf("Tamanho: %d\n", size);
+                size = CountCharactersInAFile(lst->next->input); 
+                printf("Tamanho: %d\n", size); 
             }
             //The parent process will wait until the child process finnishes it's job
             //since it will write to the terminal/console
@@ -67,6 +68,7 @@ int main(int argc, char* argv[])
             //delete a file asked by the user
             if(pid == 0)
                 DeleteFile(lst->next->input);
+
             //The parent process will wait until the child finnished it's job since there's
             //a chance of the user in the next command tries to do something with the file 
             //that is being deleted and that could cause problems
@@ -79,8 +81,9 @@ int main(int argc, char* argv[])
 
             //The child process enters the if statement and calls a function to
             //print some information about a file
-            if(pid == 0) //
+            if(pid == 0) 
                 FileStat(lst->next->input);
+
             //The parent process will wait for the child to finnish it's job since
             //it will print to the terminal/console
             else
@@ -94,6 +97,7 @@ int main(int argc, char* argv[])
             //append the content of a file to another
             if (pid == 0)
                 TruncateTwoFiles(lst->next->input, lst->next->next->input);
+
             //The parent process will wait until the child finnishes it's job since there's a chance
             //that in the next command the user will use one of the files in use and that could cause
             //problems
@@ -106,14 +110,15 @@ int main(int argc, char* argv[])
             pid = fork();
 
             //The child process enters the if statement and calls a function to
-            //append the content of a file to another
+            //list all directories and files
             if (pid == 0)
             {
-                if (lst->next->input != NULL)
+                if (lst->next->input != NULL) //if a path has been entered, list on the choosen path
                     ListPath(lst->next->input);
                 else 
-                    ListPath(".");
+                    ListPath("."); //if a path has not been entered, list on the current path
             }
+
             //The parent process will wait until the child finnishes it's job since there's a chance
             //that in the next command the user will use one of the files in use and that could cause
             //problems

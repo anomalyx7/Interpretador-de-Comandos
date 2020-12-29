@@ -31,7 +31,7 @@ void PrintFileContent(char* fileName)
     //Reads the first 20 characters of the file
     didRead = read(fd, buffer, sizeof(buffer) - 1);
     
-    //If the file is't empty enters the loop
+    //If the file isn't empty enters the loop
     //The loop will continue until the file is empty or an error occurs
     while(didRead > 0)
     {   
@@ -82,7 +82,7 @@ int CountCharactersInAFile(char* fileName)
     //Reads the first 20 characters of the file
     didRead = read(fd, buffer, sizeof(buffer) - 1);
      
-    //If the file is't empty enters the loop
+    //If the file isn't empty enters the loop
     //The loop will continue until the file is empty or an error occurs
     while(didRead > 0)
     {
@@ -115,7 +115,7 @@ int CountCharactersInAFile(char* fileName)
     return size;
 }
 
-//Deketes a file given it's name
+//Deletes a file given it's name
 void DeleteFile(char* fileName)
 {
     //If the file doen's exist, print error message to the terminal
@@ -127,17 +127,25 @@ void DeleteFile(char* fileName)
     }
 }
 
+//Prints information of the file system of a chosen file
 void FileStat(char* fileName)
 {
     struct stat sb;
     struct passwd *pwuser;
 
-    
+    //If file does exists, saves file information in struct sb
+    //If the file doen's exist, print error message to the terminal 
+    //and closes the program
     if (stat(fileName, &sb) == -1) {
         perror("Error");
         exit(1);
     }
 
+
+    //Search owner's name by his id
+    //if it does exist save him
+    //if it doen's exist, print error message to the terminal
+    //and closes the program
     if (NULL == (pwuser = getpwuid(sb.st_uid)))
 		{
 			perror("getpwuid()");
@@ -146,6 +154,7 @@ void FileStat(char* fileName)
 
     printf("File type: ");
 
+    //Checks what type of file is and print
     switch (sb.st_mode & S_IFMT) 
     {
         case S_IFBLK:  printf("block device\n");            break;
@@ -158,49 +167,69 @@ void FileStat(char* fileName)
         default:       printf("unknown?\n");                break;
     }
 
-    printf("I-node: %ld\n", (long) sb.st_ino);
-    printf("Ownership: %s\n", pwuser->pw_name);
+    printf("I-node: %ld\n", (long) sb.st_ino); //Print I-node
+    printf("Ownership: %s\n", pwuser->pw_name);//Print ownership name
 }
 
-
+//Truncate two given Files
 void TruncateTwoFiles(char* fOrigin, char* fDest)
 {
     char buffer[21];
     int fo, fd, didRead;
     
+    //Opens the file in read only mode
     fo = open(fOrigin, O_RDONLY);
+    //Opens the file in append and write only mode
     fd = open(fDest, O_APPEND | O_WRONLY);
     
-
+    //If there was any error trying to open the file
+    //prints an error message and closes the program
     if(fd < 0 || fo < 0)
     {
         perror("There was an error trying to open the file.");
         exit(1);
     }
 
+    //Reads the following 20 characters
     didRead = read(fo, buffer, sizeof(buffer) - 1);
     
+
+    //If the file isn't empty enters the loop
+    //The loop will continue until the file is empty or an error occurs
     while(didRead > 0)
     {
+        //Writes a '\0' at the end of the buffer just to be sure
         buffer[didRead] = '\0';
+
+        //Writes the biffer in the terminal/console
         write(fd, buffer, sizeof(buffer));
+
+        //Reads the next 20 characters of the file
         didRead = read(fo, buffer, sizeof(buffer) - 1);    
     }
 
+    //If something goes wrong, prints an error message and closes the program
      if(didRead == -1)
     {
         perror("There was an error trying to read the file.");
     }
 
+    //close files
     fclose(fd);
     fclose(fo);
 }
 
+//List all files and directories on the given path
+//if no path has been given, list all files and directories on the current path
 void ListPath(char* path)
 {
     struct dirent *dts;
+
+    //Opens directory
     DIR *directory = opendir(path);
     
+    //If the directory does not exist
+    //prints an error message and closes the program
     if (directory == NULL)
     {
         perror("There was an error trying to open the directory");
@@ -209,6 +238,8 @@ void ListPath(char* path)
 
     printf("Files on the inserted path\n");
     
+    //while there are files and directories to read
+    //prints directories and regular files
     while ((dts = readdir(directory)) != NULL) 
         switch (dts->d_type)
         {
@@ -222,11 +253,11 @@ void ListPath(char* path)
                 break;
         }
 
-
+    //close directory
     closedir(directory);
 }
 
-
+//Divides the user input in commands and arguments
 Inputs* ListAppend(Inputs* lst, char* word)
 {
     if(lst) lst->next = ListAppend(lst->next, word);
@@ -239,6 +270,7 @@ Inputs* ListAppend(Inputs* lst, char* word)
     return lst;
 }
 
+//Inserts command/argument in the list
 Inputs* ParseInputIntoList(char* string, Inputs *lst)
 {
     int i = 0, j = 0;
@@ -262,6 +294,7 @@ Inputs* ParseInputIntoList(char* string, Inputs *lst)
     return lst;
 }
 
+//Free list
 Inputs* FreeList(Inputs* lst)
 {
     if(lst) lst = FreeList(lst->next);
