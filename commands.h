@@ -17,9 +17,11 @@
 
 
 
-    int PrintFileContent(char* fileName);
+    void PrintFileContent(char* fileName);
     int CountCharactersInAFile(char* fileName);
     void DeleteFile(char* fileName);
+    void FileStat(char* fileName);
+    void TruncateTwoFiles(char* fOrigin, char* fDest);
 
     void teste();
 
