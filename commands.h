@@ -16,7 +16,6 @@
     
 
 
-
     void PrintFileContent(char* fileName);
     int CountCharactersInAFile(char* fileName);
     void DeleteFile(char* fileName);

@@ -103,7 +103,6 @@ int main(int argc, char* argv[])
 
         else if (strcmp(lst->input, "lista") == 0)//Enters if the user input command is equal to "lista"
         {
-           
             pid = fork();
 
             //The child process enters the if statement and calls a function to

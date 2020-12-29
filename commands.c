@@ -227,11 +227,6 @@ void ListPath(char* path)
 }
 
 
-void teste()
-{
-    puts("testado");
-}
-
 Inputs* ListAppend(Inputs* lst, char* word)
 {
     if(lst) lst->next = ListAppend(lst->next, word);
